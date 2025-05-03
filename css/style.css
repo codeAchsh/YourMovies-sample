@@ -254,7 +254,7 @@ nav{
     color: #a9b388;
     font-family: "Sansita", sans-serif;
     text-align: center;
-    border-radius: 50px;
+    /* border-radius: 50px; */
     position: absolute;
     top: 630px;
     left: 85px;
@@ -408,39 +408,41 @@ nav{
     text-align: center;
 }
 /* <!-- SLIDER --> */
-#slider{
+#slider {
     width: 100%;
-    height:auto 1000px;
+    height: 100vh; /* 画面全体にフィット */
     position: relative;
     overflow: hidden;
-    margin: 20px auto 0 auto;    
+    margin: 20px auto;
     background-color: white;
 }
-#slider ul{    
-    width: 80%;
-    height: auto;
-    position: relative;
-    padding: 30px 30px 30px auto;
-    height: 200px;
-    list-style: none;
-}
-#slider ul li{
-    position: relative;
-    display: block;
-    float: left;
-    /* size of item */
+
+#slider ul {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    margin: 0;
     padding: 0;
-    width: 1200px;
-    height: 800px;
+    list-style: none;
+    width: 300%; /* 3つのスライドを並べる */
+    height: 100%; /* スライダーの高さを100%にする */
 }
-#slider ul li video{
+
+#slider ul li {
+    position: relative;
     width: 100%;
-    height: 100%;
-    
-    padding: 50px 30px;
-    text-align: center;
-    object-fit: cover;
+    height: 100%; /* スライダーの高さに合わせる */
+    box-sizing: border-box;
 }
+
+#slider ul li video {
+    width: 100%; /* 幅を100%に設定 */
+    height: 100%; /* 高さも100%に設定 */
+    object-fit: cover; /* ビデオを枠に合わせて切り取る */
+    display: block;
+}
+
+
+
 /* controls */
 a.control-prev,a.control-next{
     position: absolute;
@@ -488,19 +490,18 @@ a.control-next{
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    opacity: 40%; /* ここで透明度を設定 */
+    opacity: 40%; 
     z-index: 1;
 }
 .popular {
     display: flex;
     position: relative;
-    z-index: 2; /* 背景画像の上に表示 */
+    z-index: 2; /
 }
 .movie-1{
     width: 400px;
     height: 600px;
     background-color: #6A1D2F;
-    /* color: #FB7676; */
     color: #a9b388;
     display: inline;
     margin: 50px 20px 60px auto;
@@ -557,7 +558,7 @@ a.control-next{
     color: white;
     margin-top: 50px;
     position: relative;
-    z-index: 2; /* 背景画像の上に表示 */
+    z-index: 2; 
 }
 .footer{
     width: 100%;
@@ -580,13 +581,10 @@ a.control-next{
         margin-left: 15px;
     }
     .overlay{
-        /* width: 100%;
-        display: flex; */
         z-index: 999;
     }
     .modal-wrapper{
         position: relative;
-        border: #00ff08 solid 3px;
     }
     .modal-header{
         height: 100px;
@@ -601,7 +599,6 @@ a.control-next{
     .modal-body{
         padding: 0;
         position: relative;
-        border: red solid 3px;
     }
     .modal-body p{
         width: 150px;
@@ -610,7 +607,6 @@ a.control-next{
         font-size: 18px;
         margin:5px auto;
         left: 80px;
-        border: yellow solid 3px;
     }
     .modal-body input{
         width: 350px;
@@ -638,158 +634,279 @@ a.control-next{
         top: 30px;
         right: 50px;
     }
-.message-1{
-    width: 75%;
-    height: 40%;
-    background-color: #000000;
-    top: 130px;
-    left: 100px;    
-}
-.message-1 h1{
-    margin-left: 30px;
-}
-.message-1 p{
-    color: #ff7112;
-    margin-left: 100px;
-}
-.head-latest h1,
-.head-past h1{
-    width: 60%;
-    margin: 30px auto 0 auto;
-}
-.movie-L{
-    width: 600px;
-    height: 400px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
+    .message-1{
+        width: 75%;
+        height: 40%;
+        background-color: #000000;
+        top: 130px;
+        left: 100px;    
+    }
+    .message-1 h1{
+        margin-left: 30px;
+    }
+    .message-1 p{
+        color: #ff7112;
+        margin-left: 100px;
+    }
+    .head-latest h1,
+    .head-past h1{
+        width: 60%;
+        margin: 30px auto 0 auto;
+    }
+    .movie-L{
+        width: 600px;
+        height: 400px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+    }
+    .head-latest .etc,
+    .head-past .etc{
+        top: 730px;
+        left: 45%;
+    }
+    .movie-L img{
+        width: 100%;
+        height: 100%;
+    }
+    .movie-L h2{
+        width: 100%;
+        font-size: 30px;
+        margin: 30px auto 0 auto;
+    }
+    .movie-L p{
+        width: 100%;
+        font-size: 20px;
+        margin: 30px auto 0 auto;
+    }
+    .movie-S{
+        height: 700px;
+        top: 700px;
+        display: flex;
+    }
+    .movie-S .S-1,
+    .movie-S .S-2,
+    .movie-S .S-3{
+        width: 30%;
+        justify-content:space-between;
+    }
+    .movie-S .S-1 h2, 
+    .movie-S .S-2 h2,
+    .movie-S .S-3 h2{
+        margin-top: 10px;
+        font-size: 15px;
+    }
+    .movie-S .S-1 p, 
+    .movie-S .S-2 p,
+    .movie-S .S-3 p{
+        margin-top: 10px;
+        font-size: 10px;
+    }
+    .head-more h1{
+        font-size: 30px;
+    }
+    .genre h2{
+        font-size: 20px;
+    }
+    .genre ul li{
+        font-size: 15px;
+    }
+
+    /* <!-- ABOUT --> */
+    .about h1{
+        font-size: 30px;
+    }
+    .about p{
+        font-size: 20px;
+    }
+
+    /* <!-- SLIDER --> */
+    #slider {
+        height: 70vh;
+    }
     
-    border: #00ff08 solid 3px;
-}
-.movie-L img{
-    width: 100%;
-    height: 100%;
-}
-.movie-L h2{
-    width: 100%;
-    font-size: 30px;
-    margin: 30px auto 0 auto;
-    border: #00ff08 solid 3px;
-}
-.movie-L p{
-    width: 100%;
-    font-size: 20px;
-    margin: 30px auto 0 auto;
+    #slider ul li video {
+        width: 100%;
+        height: auto;
+        object-fit: contain;
+    }
     
-    border: #00ff08 solid 3px;
-}
-.movie-S{
-    height: 700px;
-    top: 700px;
-    display: flex;
-    border: #00ff08 solid 3px;
-}
-.movie-S .S-1,
-.movie-S .S-2,
-.movie-S .S-3{
-    width: 30%;
-    justify-content:space-between;
+    
+    .box-popular{
+        height: 2100px;
+        position: relative;
+    }
+    .box-popular::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('../images/photoglaphing-3.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        opacity: 40%; 
+        z-index: 1;
+    }
+    .popular {
+        flex-direction: column;
+    }
+    .movie-1{
+        margin: 40px auto 20px auto;
+        
+    }
+    .movie-2{
+        margin: 20px auto 20px auto;
+    }
+    .movie-3{
+        margin: 20px auto 20px auto;
+    }
+    .title{
+        font-size: 30px;
+        margin-top: 1em;
+    }
+    .footer{
+        width: 100%;
+        height: 100px;
+        background-color: #42345C;
+    }
+    .footer p{
+        font-size: 40px;
+        font-family: sans-serif;
+        color: #ECE1FF;
+        text-align: center;
+        padding-top: 15px;
+    }
 }
 
-.movie-S .S-1 h2, 
-.movie-S .S-2 h2,
-.movie-S .S-3 h2{
-    margin-top: 10px;
-    font-size: 15px;
-}
-.movie-S .S-1 p, 
-.movie-S .S-2 p,
-.movie-S .S-3 p{
-    margin-top: 10px;
-    font-size: 10px;
-}
-.head-more h1{
-    font-size: 30px;
-}
-.genre h2{
-    font-size: 20px;
-}
-.genre ul li{
-    font-size: 15px;
-}
 
-/* <!-- SLIDER --> */
-#slider{
-    width: 500px;
-    height:1000px;
-    position: relative;
-    overflow: hidden;
-    margin: 20px auto 0 auto;    
-    background-color: white;
-    border: yellow solid 3px;
-}
-#slider ul{    
-    width: 100%;
-}
-#slider ul li{
-    position: relative;
-    display: block;
-    float: left;
-    /* size of item */
-    padding: 0;
-    width: 700px;
-    height: 800px;
-}
-#slider ul li video{
-    width: 100%;
-}
-.box-popular{
-    /* width: 100%; */
-    height: 2100px;
-    position: relative;
-}
-.box-popular::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url('../images/photoglaphing-3.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    opacity: 40%; /* ここで透明度を設定 */
-    z-index: 1;
-}
-.popular {
-    flex-direction: column;
-}
-.movie-1{
-    margin: 40px auto 20px auto;
+@media screen and (max-width:480px){
+    body{
+        width: 100%;
+    }
+    nav{
+        width: 100%;
+        height: 450px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .nav-links{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 5px;
+        padding: 0;
+        margin: 0;
+        justify-items: center;
+    }
+    .modal-header{
+        height: 100%;
+    }
+    .modal-header h2{
+        font-size: 15px;
+    }
+    .modal-body p{
+        font-size: 18px;
+        margin:5px auto;
+        left: 80px;
+    }
+    #search{
+        font-size: 25px;
+     }
+    .overlay .submit{
+        width: 80px;
+        height: 30px;
+        font-size: 15px;
+        position: fixed;
+        bottom: 50px;
+        right: 50px;
+    }
+    #close{
+        font-size: 20px;
+        top: 30px;
+        right: 50px;
+    }
+    .message-1{
+        left: 10%;    
+    }
+    .message-1 h1{
+        margin-left: 30px;
+    }
+    .message-1 p{
+        color: #ff7112;
+        margin-left: 100px;
+        margin-top: 150px;
+        background-color: #000;
+    }
     
-}
-.movie-2{
-    margin: 20px auto 20px auto;
-}
-.movie-3{
-    margin: 20px auto 20px auto;
-}
-.title{
-    margin-top: 30px;
-    /* position: relative;
-    z-index: 2;  */
-}
-.footer{
+    /* <!-- SLIDER --> */
+    #slider{
+        height: 50vh;
+        
+    }
+    #slider ul li video{
     width: 100%;
-    height: 100px;
-    background-color: #42345C;
-}
-.footer p{
-    font-size: 40px;
-    font-family: sans-serif;
-    color: #ECE1FF;
-    text-align: center;
-    padding-top: 15px;
-}
+    height: auto;
+    object-fit: contain;
+    margin-top: 10vh;
+    }
+
+
+    .box-popular{
+        width: 100%;
+        height: 100%;
+        position: relative;
+        min-height: 100%;
+
+    }
+    .popular{
+        display: flex;
+        gap: 1em;
+    }
+    .box-popular .movie-1,
+    .box-popular .movie-2,
+    .box-popular .movie-3{
+        height: 700px;
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        position: relative;
+    }
+    .box-popular::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('../images/photoglaphing-3.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        opacity: 0.4; 
+        z-index: 0;
+    }
+     .box-popular h2{
+        position: absolute;
+        top: 55%;
+     }
+    .title{
+        font-size: 25px;
+        margin-top: 0;
+    }
+    .footer{
+        width: 100%;
+        height: 100px;
+        background-color: #42345C;
+    }
+    .footer p{
+        font-size: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-top: 2em;
+    }
 }
