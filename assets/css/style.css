@@ -78,7 +78,6 @@ nav{
     background-size: cover;
     top: 0;
     left: 0;    
-    overflow: hidden;
     display: none;
     z-index: 999;
 }
@@ -92,6 +91,7 @@ nav{
     animation-name: modal;
     animation-duration: 4s;
     position: relative;
+    overflow: auto;
 }
 @keyframes modal{
     from{
@@ -186,7 +186,7 @@ nav{
     text-align: center;
     position: relative;
 }
-#head-Img{
+#head-img{
     width: 80%;
     height: 90%;
     margin-top: 70px;  
@@ -194,7 +194,7 @@ nav{
 .message-1{
     width: 40%;
     height: 40%;
-    opacity: 50%;
+    opacity: 60%;
     background-color: #000502;
     position: absolute;
     top: 130px;
