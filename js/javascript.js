@@ -1,4 +1,5 @@
-var output = ('.about');
+var output = $('.about'); 
+
 console.log('output is OK');
 
 $(document).ready(function(){
@@ -60,79 +61,69 @@ $(document).ready(function(){
 
     
         //auto slider
-        $('#checkbox').change(function(){
-            setInterval(function(){
-                moveRight();
-            },3600);
-            console.log('auto slider OK'); //check OK
-        });
-    
-        //collect height and width
-        var slideCount = $('#slider ul li').length;  //3
-        var slideHeight = $('#slider ul li').height();  
-        var slideWidth = $('#slider ul li').width();   
-    
-        var sliderUlWidth = slideCount * slideWidth; 
-        //display
-// $('#slider').css({
-//     width: slideWidth + 'px',
-//     height: slideHeight + 'px'
-// });
-    
-        //container items
-        $('#slider ul').css({
-            width: sliderUlWidth + 'px',
-            marginLeft: -slideWidth + 'px'
-        });
-        console.log('container items OK');  //check OK
-    
-        //placement of items
-        //prependTo = 各要素内の一番前に指定した要素を追加する
-        $('#slider ul li:last-child').prependTo('#slider ul');
-    
-        console.log('last-child OK');  //check OK
-        
-        
-        //functions
-        function moveLeft(){
-            $('#slider ul').animate({
-                left: '+=' + slideWidth  // スライドの幅分だけ動かす
-            }, 3000, function () {
-                $('#slider ul li:last-child').prependTo('#slider ul');
-                // アニメーション後に位置をリセットして、次のスライドに進む
-                $('#slider ul').css('left', '');  
-            });
-        }
-        
-            
-        //appendTo = 指定した要素を末尾に追加する
-        function moveRight() {
-            $('#slider ul').animate({
-                left: '-=' + slideWidth  // スライドの幅分だけ動かす
-            }, 3000, function () {
-                // スライド終了後に最初のliを一番後ろに移動
-                $('#slider ul li:first-child').appendTo('#slider ul');
-                // アニメーション後に位置をリセットして、次のスライドに進む
-                $('#slider ul').css('left', '');  
-            });
-        }
+        let slideWidth;
+    let slideCount;
+    let autoSlideInterval;
 
-        //SET auto slider
-        $('checkbox').change(function(){
-            setInterval(moveRight, 3600); 
+    function initSlider() {
+        slideWidth = $('#slider ul li').outerWidth(); // outerWidth()でpadding込み
+        slideCount = $('#slider ul li').length;
+
+        // 初期位置設定：1つ目の<li>が表示されるように
+        $('#slider ul').css({
+            width: slideWidth * slideCount + 'px',
+            marginLeft: 0 // 初期位置を0に設定
         });
-        
-            
-        //trigger
-        //moveLeft
-        $('a.control-prev').hover(function(){
-            moveLeft();
-            console.log('control-prev hover OK');  //check
+
+        console.log('Slider initialized');
+    }
+
+    function moveLeft() {
+        $('#slider ul').animate({
+            left: '+=' + slideWidth
+        }, 1000, function() {
+            $('#slider ul li:last-child').prependTo('#slider ul');
+            $('#slider ul').css('left', -slideWidth + 'px');
         });
-        $('a.control-next').click(function(){
-            moveRight();
-            console.log('control-next click OK');  //check
+    }
+
+    function moveRight() {
+        $('#slider ul').animate({
+            left: '-=' + slideWidth
+        }, 1000, function() {
+            $('#slider ul li:first-child').appendTo('#slider ul');
+            $('#slider ul').css('left', -slideWidth + 'px');
         });
+    }
+
+    // 自動スライダー ON/OFF
+    $('#checkbox').change(function() {
+        if ($(this).is(':checked')) {
+            autoSlideInterval = setInterval(moveRight, 3000);
+            console.log('Auto slider started');
+        } else {
+            clearInterval(autoSlideInterval);
+            console.log('Auto slider stopped');
+        }
+    });
+
+    // 手動操作
+    $('a.control-prev').click(function(e) {
+        e.preventDefault();
+        moveLeft();
+        console.log('Prev button clicked');
+    });
+
+    $('a.control-next').click(function(e) {
+        e.preventDefault();
+        moveRight();
+        console.log('Next button clicked');
+    });
+
+    // ウィンドウロードとリサイズ時にスライダー初期化
+    $(window).on('load resize', function() {
+        initSlider();
+    });
     
 });
 
