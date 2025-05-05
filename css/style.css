@@ -1,1037 +1,289 @@
-@import url('https://fonts.googleapis.com/css2?family=Montagu+Slab:opsz,wght@16..144,100..700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montagu+Slab:opsz,wght@16..144,100..700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Stint+Ultra+Condensed&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Stint+Ultra+Condensed&family=Tapestry&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Sansita:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,800;1,900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Racing+Sans+One&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Racing+Sans+One&display=swap');
-*{
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: monospace;
-}
-.logo{
-    width: 100px;
-    height: 100px;
-    background-color:#f3e3ad;    
-    border-radius: 50px;
-}
-.logo img{
-    width: 80%;
-    height: 80%;
-    margin: .5em .5em;
-}
-nav{
-    width: 100%;
-    height: 200px;
-    background-color: #42354C;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-}
-.nav-links{
-    text-align: center;
- }
-.nav-links li{
-    display: inline-block;
-    list-style: none;
-    font-size: 50px;
-    margin: .5em .5em;
-    text-align: center;
- }
-.nav-links button{
-    width: 150PX;
-    height: 50px;
-    font-size: 30px;
-    background-color: #60846B;
-    color: #D1C8F9;
-    text-decoration: none;
- }
-.nav-links button:hover{
-    background-color: #D1C8F9;
-    color: #60846B;
- }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="assets/css/style.css"> -->
+    <link rel="stylesheet" href="assets/css/style.css?v=1.2">
+    <!-- CDN FONT AWESOME -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- ✅ jQueryとJavaScriptは defer をつけて順番を保証 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
+    <script src="assets/js/javascript.js" defer></script>
+    <title>Your Movies</title>
+</head>
+<body>
+    <nav>
+        <div class="logo">
+            <img src="assets/images/movie-logo.png" alt="">
+        </div>
+        <div class="button-wrapper">
+            <ul class="nav-links">
+                <li class="home"><button class="tablilnk" id="home-btn">HOME</button></li>
+                <li><button class="tablilnk" id="latest-btn">LATEST</button></li>
+                <li><button class="tablilnk" id="past-btn">PAST</button></li>
+                <li><button class="tablilnk" id="more-btn">MORE</button></li>               
+            </ul>
+        </div>
+        <!-- SEARCH BUTTON -->
+        <button id="search">SEARCH</button>
+            <div class="overlay" id="modal"> <!--OPACITY-->
+                <div class="modal-wrapper">
+                    <button class="submit">SUBMIT</button>
+                    <div class="modal-header">
+                        <h2>What type of film are you interested in?</h2>
+                        <a href="" id="close">Close</a> 
 
- /* <!-- SEARCH BUTTON --> */
- #search{
-    width: 120px;
-    height: 60px;
-    border-radius: 50px;
-    background-color: #F8C924;
-    color: #2159E8;
-    font-size: 30px;
-    margin-right: 30px;
- }
- #search:hover{
-    background-color: #2159E8;
-    color: #F8C924;
- }
-.overlay{
-    width: 100%;
-    height: 1000px;
-    background-image: url('../images/film-1.jpg');
-    position: fixed;
-    text-align: center;
-    background-size: cover;
-    top: 0;
-    left: 0;    
-    overflow: hidden;
-    display: none;
-    z-index: 999;
-}
-.modal-wrapper{
-    width: 100%;
-    height: 1000px;      
-    background-color: #a2a4a3;
-    background: radial-gradient(#e7ecea87, #4c5e51);
-    text-align: center;
-    margin: 50px auto;
-    animation-name: modal;
-    animation-duration: 4s;
-    position: relative;
-}
-@keyframes modal{
-    from{
-        top: -300px;
-        opacity: 0;
-    }
-    to{
-        top: 0;
-        opacity: 1;
-    }
-}
-.modal-header{
-    height: 150px;
-    padding: 1.4em;
-    position: relative;   
-}
-.modal-header h2{
-    width: 60%;
-    height: 80px;
-    font-family: "Racing Sans One", sans-serif;
-    border-radius: 40px;
-    background-color: #42354C;
-    opacity: 90%;
-    color: white;
-    font-size: 40px;
-    text-align: center;
-    position: absolute;
-    margin: 20px;
-    padding: 10px;
-}
-.modal-gap {
-    margin-bottom: 50px;
-}
-.modal-body{
-    height: 50px;
-    display: flex;
-    position: relative;
-}
-.modal-body p{
-    width: 250px;
-    font-family: "Prompt", sans-serif;
-    font-size: 30px;
-    color: white;
-    display: inline;
-    margin: 0 auto 30px auto;
-    position: absolute;
-    left: 250px;
-    text-align: left;
-}
-.modal-body input{
-    width: 550px;
-    height: 50px;
-    font-size: 15px;
-    color: #b7b9b8;
-    margin: 0;
-    position: absolute;
-    left: 550px;
-}
-.overlay .submit{
-    width: 130PX;
-    height: 40px;
-    border-radius: 50px;
-    background-color: #c3a539;
-    color: #09266e;
-    font-size: 25px;
-    position: fixed;
-    bottom: 30px;
-    right: 60px;
-}
-.overlay .submit:hover{
-    background-color: #183c98;
-    color: #c3a539;
- }
-#close{
-    position: absolute;
-    top: 30px;
-    right: 50px;
-    font-size: 2em;
-    color: rgb(108, 4, 4);
-    text-decoration: none;
-}
-#close:hover{
-    color: green;
-}
+                        <!-- If I WANT TO USE 'X' -->
+                        <!-- <a href="" id="close">&times;</a> -->
+                    </div>
+                    <div class="modal-gap"></div>
+                    <div class="modal-body">
+                        <p>Movie genre: </p>
+                        <input type="text" name="movie-genre" placeholder="“action,” “comedy,” “drama,” “horror,” “romantic comedy”">
+                    </div>
+                    <div class="modal-gap"></div>
+                    <div class="modal-body">
+                        <p>Movie title: </p>
+                        <input type="text" name="movie-genre" placeholder="“Inception,” “The Godfather,” “Titanic”">
+                    </div>
+                    <div class="modal-gap"></div>
+                    <div class="modal-body">
+                        <p>Director's name: </p>
+                        <input type="text" name="movie-genre" placeholder=" “Steven Spielberg,” “Christopher Nolan,” “Quentin Tarantino”">
+                    </div>
+                    <div class="modal-gap"></div>
+                    <div class="modal-body">
+                        <p>Actor's name: </p>
+                        <input type="text" name="movie-genre" placeholder=" “Leonardo DiCaprio,” “Meryl Streep,” “Tom Hanks”">
+                    </div>
+                    <div class="modal-gap"></div>
+                    <div class="modal-body">
+                        <p>Plot keywords: </p>
+                        <input type="text" name="movie-genre" placeholder=" “time travel,” “space adventure,” “love story,” “mystery”">
+                    </div>                    
+                </div>
+                
+            </div>
+    </nav>
+    <!-- TABBING -->
+    <header>
+        <div class="tabcontent" id="home">
+            <!-- CONTENT -->
+            <div class="head-img">
+                <img id="head-Img" src="assets/images/forest-1.jpg" alt="">
+                <div class="message-1">
+                    <h1>Meet Your <br>Favorite Movies</h1>
+                    <p>Do you have a special movie? <br> Let's discover a wonderful movie together.</p>
+                </div>
+            </div>            
+        </div>
+        <!-- Tabbing LATEST -->
+        <div class="tabcontent" id="latest">
+            <!-- CONTENT -->
+            <div class="head-latest">
+                <h1>The latest movies</h1>
+                <div>
+                    <div class="movie-L">
+                        <img src="assets/images/Dune .jpg" alt="">
+                        <div>
+                            <h2>Dune: Part Two</h2>
+                            <p>The epic continuation of the sci-fi saga, following Paul Atreides as he seeks revenge against those who destroyed his family.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="etc">MORE</div>
+                <div>
+                    <div class="movie-S">
+                        <div class="S-1">
+                            <img src="assets/images/MissionImpossibl.jpg" alt="">
+                            <h2>Mission: Impossible</h2>
+                            <p>Dead Reckoning Part Two. Tom Cruise returns as Ethan Hunt in another high-stakes mission.</p>
+                        </div>
+                        <div class="S-2">
+                            <img src="assets/images/Guardians of the Galaxy.jpg" alt="">
+                            <h2>Guardians of the Galaxy Vol. 4</h2>
+                            <p>>The beloved Marvel team back for more cosmic adventures.</p>
+                        </div>
+                        <div class="S-3">
+                            <img src="assets/images/The Flash .jpg" alt="">
+                            <h2>The Flash: Speed Force</h2>
+                            <p>A new chapter in the DC Universe exploring <br>the multiverse with Barry Allen.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-/* <!-- TABBING --> */
-.head-img{
-    width: 100%;
-    height: 1000px;
-    background-color: #42354C;
-    display: block;
-    text-align: center;
-    position: relative;
-}
-#head-Img{
-    width: 80%;
-    height: 90%;
-    margin-top: 70px;  
-}
-.message-1{
-    width: 40%;
-    height: 40%;
-    opacity: 50%;
-    background-color: #000502;
-    position: absolute;
-    top: 130px;
-    left: 300px;    
-}
-.message-1 h1{
-    font-family: "Montagu Slab", serif;
-    font-size: 60px;
-    color: #00ff08;
-    text-decoration: underline;
-    margin-top: 20px;
-    margin-left: 50px;
-    text-align: left;
-}
-.message-1 p{
-    font-family: "Great Vibes", cursive;
-    font-size: 40px;
-    color: #ff7112;
-    margin-top: 30px;
-    margin-left: 200px;
-    text-align: left;
-}
-/* <!-- Tabbing LATEST --> */
-/* <!-- Tabbing Past --> */
-.head-latest{
-    width: 100%;
-    height: 1200px;
-    background-color: #619070;
-    background: radial-gradient(#7CB28D, #354C3C);
-    position: relative;
-    display: flex;
-}
-.head-past{
-    width: 100%;
-    height: 1200px;
-    background-color: #81462a;
-    background: radial-gradient(#FFAC85, #AF613E);
-    position: relative;
-    display: flex;
-}
-.head-latest h1,
-.head-past h1{
-    width: 30%;
-    height: 55px;
-    background-color: #4D9362;
-    color: white;
-    font-size: 40px;
-    font-family: "Sansita", sans-serif;
-    text-align: center;
-    border-radius: 30px;
-    position: absolute;
-    top: 30px;
-    left: 80px;
-}
-.head-latest .etc,
-.head-past .etc{
-    width: 100px;
-    height: 35px;
-    font-size: 20px;
-    background-color: #792d19;
-    color: #a9b388;
-    font-family: "Sansita", sans-serif;
-    text-align: center;
-    position: absolute;
-    top: 630px;
-    left: 85px;
-    padding-top: 5px;
-}
-.movie-L{
-    width: 700px;
-    height: 450px;
-    justify-content: left;
-    position: absolute;
-    top: 150px;
-    left: 100px;
-    display: flex;
-}
-.movie-L img{
-    width: 100%;
-    height: 100%;
-}
-.movie-L h2{
-    width: 600px;    
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 50px;
-    margin-top: 100px;
-    margin-left: 50px;
-}
-.movie-L p{
-    width: 600px;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 30px;
-    margin-top: 50px;
-    margin-left: 50px;
-    line-height: 2em;
-}
-.movie-S{
-    width: 100%;
-    height: 500px;
-    display: flex;
-    position: absolute;
-    top: 600px;
-    bottom: 10px;
-    margin: 50px auto;
-}
-.movie-S .S-1,
-.movie-S .S-2,
-.movie-S .S-3{
-    width: 400px;
-    height: 300px;
-    margin: 50px auto;
-    justify-content: space-between;
-}
-.movie-S .S-1 img, 
-.movie-S .S-2 img, 
-.movie-S .S-3 img{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    overflow: hidden;
-    background-repeat: no-repeat;
-}
-.movie-S .S-1 h2, 
-.movie-S .S-2 h2,
-.movie-S .S-3 h2{
-    text-align: center;
-    font-family: Arial, Helvetica, sans-serif;
-    margin-top: 20px;
-    line-height: 2em;
-}
-.movie-S .S-1 p, 
-.movie-S .S-2 p,
-.movie-S .S-3 p{
-    text-align: center;
-    font-family: Arial, Helvetica, sans-serif;
-    margin-top: 10px;
-    line-height: 2em;
-}
-/* <!-- Tabbing MORE --> */
-.head-more{
-    width: 100%;
-    height: 1800px;
-    position: relative;
-}
-.head-more img{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    overflow: hidden;
-    background-repeat: no-repeat;
-    opacity: 40%;
-}
-.head-more h1{
-    width: 100%;
-    height: 100px;
-    position: absolute;
-    top: 80px;
-    left: 50px;
-    color: black;
-    font-family: "Playfair Display", serif;
-    font-size: 40px;
-    text-decoration-line: underline;
-}
-.genre{
-    width: 100%;
-    height: 1800px;
-    position: absolute;
-    overflow: hidden;
-    top: 250px;
-}
-.genre h2{
-    font-family: sans-serif;
-    font-size: 30px;
-    padding-left: 80px;
-}
-.movie-titles{
-    margin: 1em;
-    padding-left: 7em;
-}
-.movie-titles li{
-    list-style: disc outside none;
-    display: list-item;
-    color: black;
-    font-size: 1.5em;
-}
-.genre ul li{
-    font-family: sans-serif;
-    padding-left: 10px;
-    list-style: disc;
+        <!-- Tabbing Past -->
+        <div class="tabcontent" id="past">
+            <!-- CONTENT -->
+            <div class="head-past">
+                <h1>The classic movies</h1>
+                <div>
+                    <div class="movie-L">
+                        <img src="assets/images/Gone with the Wind (1939).jpg" alt="">
+                        <div>
+                            <h2>Gone with the Wind (1939)</h2>
+                            <p>- A sweeping historical romance set during the American Civil War, directed by Victor Fleming</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="etc">MORE</div>
+                <div>
+                    <div class="movie-S">
+                        <div class="S-1">
+                            <img src="assets/images/Casablanca (1942).jpg" alt="">
+                            <h2>Casablanca (1942)</h2>
+                            <p>- A timeless love story set against the backdrop of World War II, starring Humphrey Bogart and Ingrid Bergman.</p>
+                        </div>
+                        <div class="S-2">
+                            <img src="assets/images/The Wizard of Oz (1939).jpg" alt="">
+                            <h2>The Wizard of Oz (1939)</h2>
+                            <p>- A beloved musical fantasy film featuring Judy Garland as Dorothy, who travels to the magical land of Oz.</p>
+                        </div>
+                        <div class="S-3">
+                            <img src="assets/images/The Godfather (1972) .jpg" alt="">
+                            <h2>The Godfather (1972)</h2>
+                            <p>- Directed by Francis Ford Coppola, this film is a cornerstone of American cinema, depicting the powerful Corleone crime family.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Tabbing MORE -->
+        <div class="tabcontent" id="more">
+            <!-- CONTENT -->
+            <div class="head-more">
+                <img src="assets/images/theater-1.jpg" alt="">
+                <h1>These films are highly regarded in their respective genres.<br>
+                    Do any of these catch your interest?</h1>                
+                <div>
+                    <div class="genre">
+                        <h2>Action</h2>
+                        <ul class="movie-titles">
+                            <li>Mad Max: Fury Road (2015)- A high-octane post-apocalyptic action film directed by George Miller.</li>                            
+                            <li>John Wick (2014)- Keanu Reeves stars as a retired hitman seeking vengeance.</li>
+                        </ul>
+                        <h2>Comedy</h2>
+                        <ul class="movie-titles">
+                            <li>Superbad (2007)- A hilarious coming-of-age story about two high school friends.</li>                            
+                            <li>The Hangover (2009)- A wild comedy about a bachelor party gone wrong in Las Vegas.</li>
+                        </ul>
+                        <h2>Drama</h2>
+                        <ul class="movie-titles">
+                            <li>The Shawshank Redemption (1994)- A powerful story of hope and friendship set in a prison.</li>                            
+                            <li>Forrest Gump (1994)- The life journey of a man with a low IQ who witnesses and influences several historical events.</li>
+                        </ul>
+                        <h2>Horror</h2>
+                        <ul class="movie-titles">
+                            <li>The Exorcist (1973)- A chilling tale of demonic possession.</li>                            
+                            <li>Get Out (2017)- A psychological horror film that explores racial tensions in America.</li>
+                        </ul>
+                        <h2>Romance</h2>
+                        <ul class="movie-titles">
+                            <li>Titanic (1997)- A tragic love story set against the backdrop of the infamous shipwreck.</li>                            
+                            <li>Pride and Prejudice (2005)- A classic romance based on Jane Austen's novel.</li>
+                        </ul>
+                        <h2>Science Fiction</h2>
+                        <ul class="movie-titles">
+                            <li>Inception (2010)- A mind-bending thriller about dreams within dreams.</li>                            
+                            <li>Blade Runner 2049 (2017)- A visually stunning sequel exploring the nature of humanity.</li>
+                            
+                        </ul> 
+                        <h2>Fantasy</h2>   
+                        <ul class="movie-titles">
+                            <li>The Lord of the Rings: The Fellowship of the Ring (2001)- The beginning of an epic journey in Middle-earth.</li>                            
+                            <li>Harry Potter and the Sorcerer's Stone (2001)- The magical start of the Harry Potter series.</li>
+                        </ul>
+                        <h2>Animation</h2>
+                        <ul class="movie-titles">
+                            <li>Toy Story (1995)- The beloved story of toys coming to life.</li>                            
+                            <li>Spirited Away (2001)- A beautifully animated film by Studio Ghibli.
+                            Thriller>Harry Potter and the Sorcerer's Stone (2001)- The magical start of the Harry Potter series.</li>
+                        </ul>
+                        <h2>Thriller</h2>
+                        <ul class="movie-titles">
+                            <li>Se7en (1995)- A dark and gripping 2D15BFthriller about a serial killer.</li>                            
+                            <li>Gone Girl (2014)- A suspenseful tale of a missing wife and the secrets that unfold.</li>
+                        </ul>
+                        <h2>Documentary</h2>
+                        <ul class="movie-titles">
+                            <li>The Social Dilemma (2020)- An eye-opening look at the impact of social media on society.</li>                            
+                            <li>13th (2016)- A powerful documentary exploring the history of racial inequality in the United States.</li>
+                        </ul>                
+                        
+                    </div>
+                </div>
+            </div> 
+        </div>
+
+        <!-- ABOUT -->
+        <div class="about">
+            <h1>ABOUT US</h1>
+            <p>Bringing you the best movies. We offer a wide variety of movie genres.<br>
+                I hope you find a wonderful movie to enjoy.</p>
+        </div>
+
+        <!-- SLIDER -->
+            <div id="slider">
+                <!-- controls -->
+                <a href="#" class="control-next">></a>
+                <a href="#" class="control-prev"><</a>
+                <!-- items -->
+                <ul>
+                    <li>
+                        <video controls src="assets/images/invideo-ai-1080 Epic Adventure_ Stand By Me Reimagined! 2024-08-19.mp4"></video>
+                    </li>
+                    <li>
+                        <video controls src="assets/images/invideo-ai-1080 Love Beyond the Veil_ A Ghostly Romance  2024-08-19.mp4"></video>
+                    </li>
+                    <li>
+                        <video controls src="assets/images/invideo-ai-1080 Mr. & Mrs. Smith 2.0_ Action-Packed Thri 2024-08-19 (1).mp4"></video>
+                    </li>
+                  </ul>
+            </div>
+                  <!-- auto slide controls -->
+                  <div class="slider-option">
+                    <input type="checkbox" id="checkbox">
+                    <label for="checkbox">Autoplay Slider</label>
+                </div>   
+            <section class="box-popular">
+                <div class="popular">
+                    <div class="movie-1">
+                        <img src="assets/images/DieHard.jpg" alt="">
+                        <h2>Here are some famous <strong>ACTION MOVIES:</strong><p>Die Hard(1988) - A classic action movie featuring Bruce Willis as a cop trying to save hostages from terrorists2.</p></h2>
+                    </div>
+                    <div class="movie-2">
+                        <img src="assets/images/IndianaJhones.jpg" alt="">
+                        <h2>Here are some famous <strong>ADVENTURE MOVIES:</strong> <p>Indiana Jones: Raiders of the Lost Ark(1981)Directed by Steven Spielberg and starring Harrison Ford, this film follows archaeologist Indiana Jones as he searches for the biblical Ark of the Covenant</p></h2>
+                    </div>
+                    <div class="movie-3">
+                        <img src="assets/images/Titanic.jpg" alt="">
+                        <h2>Here are some famous <strong>ROMANTIC MOVIES:</strong>
+                            <p>Titanic(1997):Directed by James Cameron, this epic romance and disaster film stars Leonardo DiCaprio and Kate Winslet as young lovers whomeet on the ill-fated RMS Titanic</p></h2>
+                    </div>
+                </div>
+                        <p class="title">Here are some well-known films</p>
+                
+            </section>
+            <div class="footer">
+                <p>code.achsh@gmail.com | 2024</p>
+            </div>
+            
+            
+    </header>
     
-}
+    <!-- Connection always on top of scripts -->
+    <!-- Online -->
+    <!-- <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.6.1.min.js"></script> -->
+    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
 
-/* <!-- ABOUT --> */
-.about{
-    width: 100%;
-    height: 220px;
-    background-color: #42354C;
-}
-.about h1{
-    font-family: "Work Sans", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: 600;
-    font-style: normal;
-    font-size: 42px;
-    color: #FFFBFB;
-    text-align: center;
-    padding-top: 20px;
-}
-.about p{
-    font-family: "Stint Ultra Condensed", serif;
-    font-style: normal;
-    font-size: 42px;
-    color: #FFFBFB;
-    margin: 20px auto;
-    text-align: center;
-}
-
-/* <!-- SLIDER --> */
-#slider {
-    width: 100%;
-    height: 100vh; 
-    position: relative;
-    overflow: hidden;
-    margin: 20px auto;
-    background-color: white;
-}
-
-#slider ul {
-    display: flex;
-    transition: transform 0.5s ease-in-out;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    width: 300%; /* 3つのスライドを並べる */
-    height: 100%; /* スライダーの高さを100%にする */
-    position: relative;
-    left: 0;
-}
-
-#slider ul li {
-    position: relative;
-    width: 100%;
-    height: 100%; 
-    box-sizing: border-box;
-    float: left;
-}
-
-#slider ul li video {
-    width: 100%; 
-    height: 100%; 
-    object-fit: cover; 
-    display: block;
-}
-
-/* controls */
-a.control-prev,a.control-next{
-    position: absolute;
-    z-index: 999;
-    display: block;
-    padding: auto;
-    width: auto;
-    margin: 350px 10px auto 10px;
-    background-color: white;
-    text-decoration: none;
-    text-align: center;
-    color: black;
-    font-weight: 600;
-    font-size: 20px;
-    opacity: 0.8;
-    cursor: pointer;
-}
-a.control-prev:hover,a.control-next:hover{
-    opacity: 1;
-    -webkit-transition: all 0.2s ease;
-}
-a.control-next{
-    right: 0;
-}
-/* <!-- auto slide controls --> */
-.slider-option{
-    position: relative;
-    margin: 10px auto 50px auto;
-    width: 160px;
-    font-size: 18px;
-}
-.box-popular{
-    width: 100%;
-    height: 900px;
-    position: relative;
-}
-.box-popular::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url('../images/photoglaphing-3.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    opacity: 40%; 
-    z-index: 1;
-}
-.popular {
-    display: flex;
-    position: relative;
-    z-index: 2; /
-}
-.movie-1{
-    width: 400px;
-    height: 600px;
-    background-color: #6A1D2F;
-    color: #a9b388;
-    display: inline;
-    margin: 50px 20px 60px auto;
-    justify-content: space-between;
-}
-.movie-2{
-    width: 400px;
-    height: 600px;
-    background-color: #354C3C;
-    color: #EBAAAA;
-    display: inline;
-    margin: 50px auto 60px auto;
-    justify-content: space-between;
-}
-.movie-3{
-    width: 400px;
-    height: 600px;
-    background-color: #DD9731;
-    color: #2D15BF;
-    display: inline;
-    margin: 50px auto 60px 20px;
-    justify-content: space-between;
-}
-.movie-1 img, 
-.movie-2 img, 
-.movie-3 img{
-    width: 350px;
-    height: 350px;
-    text-align: center;
-    display: block;
-    margin: 25px 25px auto 25px;
-    border-radius: 30px;
-}
-.movie-1 h2,
-.movie-2 h2, 
-.movie-3 h2{
-    margin-top: 40px;
-    margin-left: 20px;
-    font-weight: 400;
-}
-.movie-1 p,
-.movie-2 p, 
-.movie-3 p{
-    margin-top: 30px;
-    font-size: 18px;
-    font-family:  "Tapestry", serif;
-}
-.title{
-    width: 100%;
-    height: 50px;
-    text-align: center;
-    font-size: 60px;
-    font-weight: 500;
-    color: white;
-    margin-top: 50px;
-    position: relative;
-    z-index: 2; 
-}
-.footer{
-    width: 100%;
-    height: 100px;
-    background-color: #42345C;
-}
-.footer p{
-    font-size: 40px;
-    font-family: sans-serif;
-    color: #ECE1FF;
-    text-align: center;
-    padding-top: 15px;
-}
-
-@media screen and (max-width:768px){
-    nav{
-        width: 100%;
-    }
-    .logo{
-        margin-left: 15px;
-    }
-    .overlay{
-        z-index: 999;
-    }
-    .modal-wrapper{
-        position: relative;
-    }
-    .modal-header{
-        height: 100px;
-    }
-    .modal-header h2{
-        width: 500px;
-        height: auto;
-        font-size: 20px;
-        padding: 10px;
-        position: absolute;
-    }
-    .modal-gap {
-        margin-bottom: 30px;
-    }
-    .modal-body{
-        padding: 0;
-        position: relative;
-    }
-    .modal-body p{
-        width: 150px;
-        position: absolute;
-        top: 0;
-        font-size: 18px;
-        margin:5px auto;
-        left: 80px;
-    }
-    .modal-body input{
-        width: 350px;
-        height: 40px;
-        position: absolute;
-        top: 0;
-        font-size: 10px;
-        margin: 3px auto;
-        left: 250px;
-    }
-    #search{
-        font-size: 25px;
-     }
-    .overlay .submit{
-        width: 80px;
-        height: 30px;
-        font-size: 15px;
-        position: fixed;
-        bottom: 50px;
-        right: 50px;
-    }
-    #close{
-        font-size: 20px;
-        top: 30px;
-        right: 50px;
-    }
-    .message-1{
-        width: 75%;
-        height: 40%;
-        background-color: #000000;
-        top: 130px;
-        left: 100px;    
-    }
-    .message-1 h1{
-        margin-left: 30px;
-    }
-    .message-1 p{
-        color: #ff7112;
-        margin-left: 100px;
-    }
-    .head-latest h1,
-    .head-past h1{
-        width: 60%;
-        margin: 30px auto 0 auto;
-    }
-    .movie-L{
-        width: 600px;
-        height: 400px;
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-    }
-    .head-latest .etc,
-    .head-past .etc{
-        top: 730px;
-        left: 45%;
-    }
-    .movie-L img{
-        width: 100%;
-        height: 100%;
-    }
-    .movie-L h2{
-        width: 100%;
-        font-size: 30px;
-        margin: 30px auto 0 auto;
-    }
-    .movie-L p{
-        width: 100%;
-        font-size: 20px;
-        margin: 30px auto 0 auto;
-    }
-    .movie-S{
-        height: 700px;
-        top: 700px;
-        display: flex;
-    }
-    .movie-S .S-1,
-    .movie-S .S-2,
-    .movie-S .S-3{
-        width: 30%;
-        justify-content:space-between;
-    }
-    .movie-S .S-1 h2, 
-    .movie-S .S-2 h2,
-    .movie-S .S-3 h2{
-        margin-top: 10px;
-        font-size: 15px;
-    }
-    .movie-S .S-1 p, 
-    .movie-S .S-2 p,
-    .movie-S .S-3 p{
-        margin-top: 10px;
-        font-size: 10px;
-    }
-    .head-more{
-        height: 1500px;
-    }
-    .head-more h1{
-        font-size: 30px;
-    }
-    .genre h2{
-        font-size: 20px;
-    }
-    .genre ul li{
-        font-size: 15px;
-    }
-
-    /* <!-- ABOUT --> */
-    .about h1{
-        font-size: 30px;
-    }
-    .about p{
-        font-size: 20px;
-    }
-
-    /* <!-- SLIDER --> */
-    #slider {
-        height: 70vh;
-    }
-    
-    #slider ul li video {
-        width: 100%;
-        height: auto;
-        object-fit: contain;
-    }
-    
-    
-    .box-popular{
-        height: 2100px;
-        position: relative;
-    }
-    .box-popular::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-image: url('../images/photoglaphing-3.jpg');
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        opacity: 40%; 
-        z-index: 1;
-    }
-    .popular {
-        flex-direction: column;
-    }
-    .movie-1{
-        margin: 40px auto 20px auto;
-        
-    }
-    .movie-2{
-        margin: 20px auto 20px auto;
-    }
-    .movie-3{
-        margin: 20px auto 20px auto;
-    }
-    .title{
-        font-size: 30px;
-        margin-top: 1em;
-    }
-    .footer{
-        width: 100%;
-        height: 100px;
-        background-color: #42345C;
-    }
-    .footer p{
-        font-size: 40px;
-        font-family: sans-serif;
-        color: #ECE1FF;
-        text-align: center;
-        padding-top: 15px;
-    }
-}
-
-
-@media screen and (max-width:480px){
-    body{
-        width: 100%;
-    }
-    nav{
-        width: 100%;
-        height: 450px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    .nav-links{
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 5px;
-        padding: 0;
-        margin: 0;
-        justify-items: center;
-    }
+   
+    <!-- Codes -->     
+    <!-- <script src="assets/js/javascript.js"></script> -->
+    <!-- <script src="assets/js/jquery.js"></script> -->
 
     
-    .message-1{
-        left: 10%;    
-    }
-    .message-1 h1{
-        margin-left: 30px;
-    }
-    .message-1 p{
-        color: #ff7112;
-        margin-left: 100px;
-        margin-top: 150px;
-        background-color: #000;
-    }
-
-    /* <!-- Tabbing LATEST --> */
-    /* <!-- Tabbing Past --> */
-    header{
-        height: auto;
-        overflow: visible;
-    }
-    .head-latest{
-        width: 100%;
-        height: 1300px;
-        position: relative;
-        display: flex;
-    }
-    #past{
-        display: block;
-    }
-    .head-past{
-        width: 100%;
-        height: 1400px;
-        position: relative;
-        display: flex;
-    }
-    .head-latest h1,
-    .head-past h1{
-        font-size: 30px;
-        padding-top: 0.1em;
-    }
-    .head-latest .etc,
-    .head-past .etc{
-        top: 700px; 
-        left: 40%;
-    }
-    .movie-L,
-    .movie-s{
-        width: 80%;
-        height: auto;
-        top: 150px;
-        left: 10%;
-    }
-    .movie-L h2,
-    .movie-s h2{
-        width: 80%;    
-        font-size: 30px;
-        margin-top: 10%;
-    }
-    .movie-L p,
-    .movie-s p{
-        width: 60%;
-        font-size: 20px;
-        margin-top: 10%;
-        margin-left: 20%;
-        line-height: 1em;
-    }
-    .head-more{
-        width: 100%;
-        height: 2000px;
-    }
-    .head-more h1{
-        font-size: 20px;
-    }
-    .genre li{
-        left: 10%;
-    }
-
-    /* <!-- SLIDER --> */
-    #slider{
-        height: 50vh;        
-    }
-    #slider ul li video{
-    width: 100%;
-    height: auto;
-    object-fit: contain;
-    margin-top: 10vh;
-    }
-    .box-popular{
-        width: 100%;
-        height: 100%;
-        position: relative;
-        min-height: 100%;
-    }
-    .popular{
-        display: flex;
-        gap: 1em;
-    }
-    .box-popular .movie-1,
-    .box-popular .movie-2,
-    .box-popular .movie-3{
-        height: 700px;
-        display: flex;
-        flex-direction: column;
-        justify-content: start;
-        position: relative;
-    }
-     .box-popular h2{
-        position: absolute;
-        top: 55%;
-     }
-    .title{
-        font-size: 25px;
-        margin-top: 0;
-    }
-    .footer{
-        width: 100%;
-        height: 100px;
-        background-color: #42345C;
-    }
-    .footer p{
-        font-size: 20px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding-top: 2em;
-    }
-
-    /* 480px以下の画面で正しいスタイルを優先させるために、メディアクエリ内の最後に追加 */
-    /* SEARCH　は480以下の時だけ縦並び */
-    .modal-body {
-        display: flex;
-        flex-direction: column;
-        gap: 0;
-    }
-    .modal-body p,
-    .modal-body input {
-        position: static;
-        width: 100% ;
-        margin: 0 auto;
-    }
-    .modal-gap {
-        display: none !important;
-    }
-    .modal-wrapper{
-        width: 100% ;
-        height: 800px;
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-        align-items: center;
-        gap: 0;
-        padding: 0;
-        margin-top: 50px;
-    }
-    .modal-header{
-        width: 80%;
-        height: auto;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        top: 50px;
-    }
-    .modal-header a{
-        margin-right: 0;
-    }
-    .modal-header h2{
-        width: 100%;
-        font-size: 15px;
-    }
-    
-    .modal-body{
-        width: 80% ;
-        height: 100px ;
-        display: flex ;
-        flex-direction: column ;
-        /* justify-content: center; */
-        gap: 0 !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        top: 150px;
-    }
-    .modal-body p{
-        position: static;
-        width: 100% ;
-        font-size: 18px;
-        margin: 0 ;
-        padding: 0 ;
-    }
-    .modal-body input{
-        position: static ;
-        width: 100% ;
-        margin: 0 ;
-        padding: 0 ;
-        margin-bottom: 10px ;
-    }
-    .modal-body + .modal-body{
-        margin-top: 0 ;  /* 各modal-body間の間隔をゼロに */
-    }
-    #search{
-        font-size: 25px;
-        position: relative;
-        left: 5%;
-     }
-    .overlay {
-        width: 100%;
-        height:100%;
-        font-size: 1px;
-        overflow-y: auto;
-        padding-bottom: 80px;
-    }
-    #close{
-        font-size: 20px;
-        top: -30px;
-        right: 5px;
-    }
-    .submit{
-        margin-top: auto;
-        width: 100%;
-        padding: 10px;
-        text-align: center;
-    }
-}
+</body>
+</html>
